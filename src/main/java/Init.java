@@ -38,7 +38,7 @@ public class Init extends HttpServlet {
              if (pseudo.length() == 0 ){
                  response.sendRedirect("index.html");
              }else{
-                 response.sendRedirect("interface.html");
+                 response.sendRedirect("HTML/interface.html");
              }
              
         }
