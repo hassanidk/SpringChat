@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -31,9 +32,24 @@ public class Init extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        if (request.getMethod().equals("POST")){
+             HttpSession session = request.getSession();
+             String pseudo = request.getParameter("pseudo");
+             if (pseudo.length() == 0 ){
+                 response.sendRedirect("index.html");
+             }else{
+                 response.sendRedirect("interface.html");
+             }
+             
+        }
+        
+        if (request.getMethod().equals("GET")){
+            response.sendRedirect("index.html");
+        }
+        /*
         PrintWriter out = response.getWriter();
         try {
-            /* TODO output your page here. You may use following sample code. */
+            TODO output your page here. You may use following sample code. 
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
@@ -45,7 +61,7 @@ public class Init extends HttpServlet {
             out.println("</html>");
         } finally {
             out.close();
-        }
+        }*/
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -60,7 +76,8 @@ public class Init extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        processRequest(request,response);
+        
     }
 
     /**
@@ -75,6 +92,7 @@ public class Init extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+       
     }
 
     /**
