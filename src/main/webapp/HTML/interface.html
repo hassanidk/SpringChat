@@ -12,9 +12,9 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <iframe src="Messages.jsp" id="iframeInterface"> </iframe>
-        
-        <form method="post" action="messages">
+        <iframe src="../JSP/Messages.jsp" id="iframeInterface" name="messages"> </iframe>
+
+        <form method="post" action="../JSP/Messages.jsp" target="messages" id="formInterface">
             <label id="labelMessage">Entrez votre message :</label><input type="text" placeholder="Votre message ...">
             <input type="submit" value="Envoyer"> 
         </form>

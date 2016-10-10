@@ -43,7 +43,7 @@ public class Init extends HttpServlet {
              
         }
         
-        if (request.getMethod().equals("GET")){
+        else if (request.getMethod().equals("GET")){
             response.sendRedirect("index.html");
         }
         /*
