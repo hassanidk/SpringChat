@@ -9,3 +9,10 @@ and open the template in the editor.
 */
 
 
+.divMessage{
+    margin-top: 5px;
+}
+
+.pseudoMessage{
+    font-weight: bold;
+}

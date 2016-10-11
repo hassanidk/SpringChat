@@ -24,22 +24,21 @@
         <meta http-equiv="Refresh" content="5">
     </head>
     <body>
-        <h1>Super Chat !</h1>
+        <h1>Qui de nouveau dans le Chat ?</h1>
         
-        <%
-    if(request.getMethod().equals("GET")){%>
-        <h1> GET </h1>
-        <!-- Rafraichir la page -->
-    <%}else if (request.getMethod().equals("POST")){%>
-        <h1> POST </h1>
-        <!-- Rafraichir la page -->
-<%}
-%>
-
-<% 
-    for(int i=0; i < messages.size(); i++){
-        out.println(messages.get(i).getPseudo()+" - "+messages.get(i).getMessage());
-    }
+    <% for(int i=0; i < messages.size(); i++){ %>
+        <div class="divMessage">
+            <span class="pseudoMessage"> 
+                <% out.println(messages.get(i).getPseudo()); %> 
+            </span>
+            <span class="separationMessage">
+                -
+            </span>
+            <span class="contenuMessage"> 
+                <% out.println(messages.get(i).getMessage()); %> 
+            </span>
+        </div>
+    <% }
 %>
     </body>
 </html>

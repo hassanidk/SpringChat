@@ -55,7 +55,6 @@ public class Init extends HttpServlet {
         }
         else{
             session.setAttribute("pseudo", pseudo);
-            //this.getServletContext().getRequestDispatcher( "/JSP/Messages.jsp" ).forward( request, response );
             response.sendRedirect("HTML/interface.html");
         }
        
