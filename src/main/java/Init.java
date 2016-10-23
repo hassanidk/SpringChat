@@ -50,11 +50,13 @@ public class Init extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
         String pseudo = request.getParameter("pseudo");
+        String salon = request.getParameter("salon");
         if (pseudo.length() == 0 ){
             response.sendRedirect("index.html");
         }
         else{
             session.setAttribute("pseudo", pseudo);
+            session.setAttribute("salon", salon);
             response.sendRedirect("HTML/interface.html");
         }
        

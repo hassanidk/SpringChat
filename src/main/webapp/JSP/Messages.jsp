@@ -7,10 +7,30 @@
 <%@page import="java.util.*"%>
 <%@page import="JAVA.Message"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%! List<Message> messages = new ArrayList<Message>(); %>
-<% if(request.getMethod().equals("POST")){ //On va créer et ajouter le nouveau message à la suite des autres
+<%! 
+	String nomSalon;
+	boolean testSalon;
+	Map<String, List<Message>> listeMessage = new HashMap<String, List<Message>>();
+	
+%>
+<% 	
+	//Variable qui permet de tester si le salon existe
+	testSalon = false;
+	nomSalon = (String)session.getAttribute("salon");
+	if(request.getMethod().equals("POST")){
+		//Création du message
     Message mes = new Message((String)session.getAttribute("pseudo"), request.getParameter("newMessage"));
-    messages.add(mes);
+    for (Map.Entry<String, List<Message>> it: listeMessage.entrySet()){
+    	if (it.getKey().equals(nomSalon))
+    		testSalon = true;  		
+    }
+    // Création d'une arraylist de message si le salon n'existe pas
+    if (testSalon == false)
+    	listeMessage.put(nomSalon, new ArrayList<Message>());
+    // Ajout du message dans la liste de message concerné
+    listeMessage.get(nomSalon).add(mes);
+    
+    
 %>
 <%}%>
 <!DOCTYPE html>
@@ -25,20 +45,27 @@
     </head>
     <body>
         <h1>Qui de nouveau dans le Chat ?</h1>
+        <h2> Salon <%out.println(session.getAttribute("salon")); %></h2>
         
-    <% for(int i=0; i < messages.size(); i++){ %>
+    <% for (Map.Entry<String, List<Message>> it: listeMessage.entrySet()){
+    		if (it.getKey().equals(nomSalon)){
+    			for (int i =0;i < it.getValue().size();i++){	
+    		
+    %>
         <div class="divMessage">
             <span class="pseudoMessage"> 
-                <% out.println(messages.get(i).getPseudo()); %> 
+                <% out.println(it.getValue().get(i).getPseudo()); %> 
             </span>
             <span class="separationMessage">
                 -
             </span>
             <span class="contenuMessage"> 
-                <% out.println(messages.get(i).getMessage()); %> 
+                <% out.println(it.getValue().get(i).getMessage()); %> 
             </span>
         </div>
-    <% }
+    <% 			}
+    		}
+    	}
 %>
     </body>
 </html>
