@@ -8,31 +8,30 @@
 <%@page import="JAVA.Message"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%! 
-	String nomSalon;
-	boolean testSalon;
-	Map<String, List<Message>> listeMessage = new HashMap<String, List<Message>>();
-	
+    String nomSalon;
+    boolean testSalon;
+    Map<String, List<Message>> listeMessage = new HashMap<String, List<Message>>();	
 %>
 <% 	
-	//Variable qui permet de tester si le salon existe
-	testSalon = false;
-	nomSalon = (String)session.getAttribute("salon");
-	if(request.getMethod().equals("POST")){
-		//Création du message
-    Message mes = new Message((String)session.getAttribute("pseudo"), request.getParameter("newMessage"));
-    for (Map.Entry<String, List<Message>> it: listeMessage.entrySet()){
-    	if (it.getKey().equals(nomSalon))
-    		testSalon = true;  		
+    //Variable qui permet de tester si le salon existe
+    testSalon = false;
+    nomSalon = (String)session.getAttribute("salon");
+    if(request.getMethod().equals("POST")){ //Création du message	
+        Message mes = new Message((String)session.getAttribute("pseudo"), request.getParameter("newMessage"));
+        for (Map.Entry<String, List<Message>> it: listeMessage.entrySet()){
+            if (it.getKey().equals(nomSalon)){
+                testSalon = true;
+            }		  		
+        }
+        // Création d'une arraylist de message si le salon n'existe pas
+        if (testSalon == false){
+            listeMessage.put(nomSalon, new ArrayList<Message>());
+        }	
+        // Ajout du message dans la liste de message concerné
+        listeMessage.get(nomSalon).add(mes);
+
     }
-    // Création d'une arraylist de message si le salon n'existe pas
-    if (testSalon == false)
-    	listeMessage.put(nomSalon, new ArrayList<Message>());
-    // Ajout du message dans la liste de message concerné
-    listeMessage.get(nomSalon).add(mes);
-    
-    
 %>
-<%}%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -45,11 +44,12 @@
     </head>
     <body>
         <h1>Qui de nouveau dans le Chat ?</h1>
-        <h2> Salon <%out.println(session.getAttribute("salon")); %></h2>
+        <h2> Salon <% out.println(session.getAttribute("salon")); %></h2>
         
     <% for (Map.Entry<String, List<Message>> it: listeMessage.entrySet()){
     		if (it.getKey().equals(nomSalon)){
-    			for (int i =0;i < it.getValue().size();i++){	
+                    int i;
+                    for (i =0;i < it.getValue().size();i++){	
     		
     %>
         <div class="divMessage">

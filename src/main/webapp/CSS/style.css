@@ -10,7 +10,6 @@ and open the template in the editor.
 
 BODY, HTML{
     height:100%;
-    width:100%;
 }
 
 #iframeInterface{
@@ -20,7 +19,6 @@ BODY, HTML{
 }
 
 #formInterface{
-   border: solid 2px red;
    margin-top:10px;
 }
 
