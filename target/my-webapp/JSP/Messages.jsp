@@ -10,7 +10,7 @@
 <%! 
     String nomSalon;
     boolean testSalon;
-    Map<String, List<Message>> listeMessage = new HashMap<String, List<Message>>();	
+    Map<String, List<Message>> listeMessages = new HashMap<String, List<Message>>();	
 %>
 <% 	
     //Variable qui permet de tester si le salon existe
@@ -18,17 +18,17 @@
     nomSalon = (String)session.getAttribute("salon");
     if(request.getMethod().equals("POST")){ //Création du message	
         Message mes = new Message((String)session.getAttribute("pseudo"), request.getParameter("newMessage"));
-        for (Map.Entry<String, List<Message>> it: listeMessage.entrySet()){
+        for (Map.Entry<String, List<Message>> it: listeMessages.entrySet()){
             if (it.getKey().equals(nomSalon)){
                 testSalon = true;
             }		  		
         }
         // Création d'une arraylist de message si le salon n'existe pas
         if (testSalon == false){
-            listeMessage.put(nomSalon, new ArrayList<Message>());
+            listeMessages.put(nomSalon, new ArrayList<Message>());
         }	
         // Ajout du message dans la liste de message concerné
-        listeMessage.get(nomSalon).add(mes);
+        listeMessages.get(nomSalon).add(mes);
 
     }
 %>
@@ -46,10 +46,9 @@
         <h1>Qui de nouveau dans le Chat ?</h1>
         <h2> Salon <% out.println(session.getAttribute("salon")); %></h2>
         
-    <% for (Map.Entry<String, List<Message>> it: listeMessage.entrySet()){
+    <% for (Map.Entry<String, List<Message>> it: listeMessages.entrySet()){
     		if (it.getKey().equals(nomSalon)){
-                    int i;
-                    for (i =0;i < it.getValue().size();i++){	
+                    for (int i =0;i < it.getValue().size();i++){	
     		
     %>
         <div class="divMessage">
