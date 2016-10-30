@@ -1,3 +1,4 @@
+package controller;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -57,7 +58,9 @@ public class Init extends HttpServlet {
         else{
             session.setAttribute("pseudo", pseudo);
             session.setAttribute("salon", salon);
+            // On ne recupere pas tous les message liées au salon lors du chargement /!\
             response.sendRedirect("HTML/interface.html");
+            
         }
        
     }
