@@ -6,13 +6,19 @@ package controller;
  */
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
+import modele.Message;
 
 /**
  *
@@ -22,6 +28,12 @@ import javax.servlet.http.HttpSession;
 public class Init extends HttpServlet {
     
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	
+	/**
      * Handles the HTTP <code>GET</code> method.
      *
      * @param request servlet request
@@ -32,8 +44,9 @@ public class Init extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+  
             response.setContentType("text/html;charset=UTF-8");
-            response.sendRedirect("index.html");
+            response.sendRedirect("HTML/index.html");
         
     }
 
@@ -49,16 +62,26 @@ public class Init extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession();
         String pseudo = request.getParameter("pseudo");
         String salon = request.getParameter("salon");
+        System.out.println(pseudo);
+        
         if (pseudo.length() == 0 ){
-            response.sendRedirect("index.html");
+        	
+            response.sendRedirect("HTML/index.html");
         }
         else{
-            session.setAttribute("pseudo", pseudo);
-            session.setAttribute("salon", salon);
-            // On ne recupere pas tous les message liées au salon lors du chargement /!\
+        	
+            request.getSession().setAttribute("pseudo", pseudo);
+            request.getSession().setAttribute("salon", salon);
+            
+            /*
+             * On crée un cookie utilisateur. 
+             * Lors de la création, aucun message n'es mémorisé côté client
+             */
+            Cookie cookie = new Cookie("utilisateur", "1");
+            
+            response.addCookie(cookie);
             response.sendRedirect("HTML/interface.html");
             
         }
@@ -74,5 +97,7 @@ public class Init extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    
 
 }
