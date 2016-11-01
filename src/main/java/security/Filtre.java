@@ -40,13 +40,17 @@ public class Filtre implements Filter {
 	        		chain.doFilter(request, response);
 	        	}else{
 	        		System.out.println(req.getRequestURI());
-	        		res.sendRedirect("HTML/index.html");
-	        	//	request.getRequestDispatcher("../index.html").forward(req, res)	
+	        		res.sendRedirect("/my-webapp");
 	        	}
 	        		
 	        }else{
+	        	// Cas où l'utilisateur est connecté, et qu'il tente d'acceder à la page de login
+	        	if (req.getRequestURI().contains("index")){
+	        		res.sendRedirect("/my-webapp");
+	        	}else{
+	        		chain.doFilter(request, response);
+	        	}
 	        	
-	        	chain.doFilter(request, response);
 	        }
        
 	}

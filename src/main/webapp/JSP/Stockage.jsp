@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.List,java.util.ArrayList,java.util.Map,java.util.HashMap, modele.Message,controller.ControllerMessage" %>
+<%@ page import="java.io.*,java.util.*, javax.servlet.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -8,12 +9,13 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<%
-	ServletContext ctx=getServletContext();  
-	
-	Map<String, List<Message>> listeMessages = (Map<String, List<Message>> )ctx.getAttribute("modele");
-	
+	<%	
+		// Récupération de la Map dans le contexte applicatif
+		ServletContext ctx=getServletContext();  
+		Map<String, List<Message>> listeMessages = (Map<String, List<Message>> )ctx.getAttribute("modele");
+		
 	 	String nomSalon;
+	 	// Booléen qui permet de tester si nomSalon est présent comme clé dans la map
 	    boolean testSalon;
 	    String pseudo = (String) request.getSession().getAttribute("pseudo");
 	    testSalon = false;
@@ -33,20 +35,20 @@
         // Ajout du message dans la liste de message concerné
         listeMessages.get(nomSalon).add(mes);
         
-     // Mise à jour du cookie utilisateur
- 	ControllerMessage test;
-     test = new ControllerMessage();
-     
-     Cookie cookie = test.getCookie(request, "utilisateur");
+     // Déclaration d'un objet de type controller pour récupérer la méthode getCookie()
+ 	 ControllerMessage temp;
+     temp = new ControllerMessage();
+  	 // Récupération et mise à jour du cookie utilisateur
+     Cookie cookie = temp.getCookie(request, "utilisateur");
      cookie.setValue(String.valueOf(listeMessages.get(nomSalon).size()));
      
-     
+     // Ajout du cookie à la réponse 
      response.addCookie(cookie);
+     // Ajout du modele à la requete
      request.setAttribute("modele", listeMessages);
-	
-	
-	
+
 	%>
+	<!-- Redirection -->
 	<jsp:forward page="Messages.jsp"/>
 </body>
 </html>

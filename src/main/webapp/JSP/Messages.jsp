@@ -17,9 +17,8 @@
         <link href="<c:url value="CSS/messages.css" />" type="text/css" rel="stylesheet">
         <link href="../CSS/messages.css" type="text/css" rel="stylesheet">
         <!-- Va permettre de rafraichir la page toutes les 5 secondes -->
-        <meta http-equiv="refresh" content="5"> 
-      
-              
+   
+             
     </head>
     <body>
         <h1>Qui de nouveau dans le Chat ?</h1>
