@@ -58,7 +58,6 @@ public class Init extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String pseudo = request.getParameter("pseudo");
         String salon = request.getParameter("salon");
-        System.out.println(pseudo);
         
         if (pseudo.length() == 0 ){
         	

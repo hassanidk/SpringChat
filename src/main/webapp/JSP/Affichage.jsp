@@ -3,7 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="java.io.*,java.util.*, javax.servlet.*" %>
 
+      <%
       
+      %>
        
        
    		<c:forEach items="${modele}" var="entry">

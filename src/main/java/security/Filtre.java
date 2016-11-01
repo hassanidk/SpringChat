@@ -39,7 +39,6 @@ public class Filtre implements Filter {
 	        	if (req.getRequestURI().contains("index") || req.getRequestURI().equals("/my-webapp/") || req.getRequestURI().contains("Init")){
 	        		chain.doFilter(request, response);
 	        	}else{
-	        		System.out.println(req.getRequestURI());
 	        		res.sendRedirect("/my-webapp");
 	        	}
 	        		
