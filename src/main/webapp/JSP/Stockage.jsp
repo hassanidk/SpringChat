@@ -46,9 +46,9 @@
      response.addCookie(cookie);
      // Ajout du modele à la requete
      request.setAttribute("modele", listeMessages);
-
+   
 	%>
-	<!-- Redirection -->
-	<jsp:forward page="Messages.jsp"/>
+	<!-- 
+	<jsp:forward page="Messages.jsp"/>Redirection -->
 </body>
 </html>

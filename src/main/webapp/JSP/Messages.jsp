@@ -6,7 +6,9 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="java.util.List,java.util.ArrayList,java.util.Map,java.util.HashMap, modele.Message,controller.ControllerMessage" %>
+<% response.setHeader("refresh", "5");
 
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -15,7 +17,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="Cache-control" content="public">
         <link href="<c:url value="CSS/messages.css" />" type="text/css" rel="stylesheet">
-        <link href="../CSS/messages.css" type="text/css" rel="stylesheet">
+       <!--  <link href="../CSS/messages.css" type="text/css" rel="stylesheet">--> 
         <!-- Va permettre de rafraichir la page toutes les 5 secondes -->
    
              

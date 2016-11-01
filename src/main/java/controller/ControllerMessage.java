@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 
 
 @WebServlet( urlPatterns = {"/Controller"})
-public class ControllerMessage extends HttpServlet {
+public class ControllerMessage  extends HttpServlet  {
 	 /**
 	 * 
 	 */
@@ -50,20 +50,28 @@ public class ControllerMessage extends HttpServlet {
 			
 			// Déclaration et définition de variables
 			String salon = (String) request.getSession().getAttribute("salon");
+			try{
 			String nb_message = String.valueOf(listeMessages.get(salon).size());
 			
 			//Récupération du cookie utilisateur
 			Cookie cookie = getCookie(request, "utilisateur");
 			if (!cookie.getValue().equals(nb_message)){
 				//request.setAttribute("modele", listeMessages);
-				
-				cookie.setValue(nb_message);
+			
+				cookie.setValue(nb_message); 
 				response.addCookie(cookie);
 							
 				request.getRequestDispatcher("JSP/Messages.jsp").forward(request, response);
 			}else{
-				// Page non modifiée, envoi de l'entête de code 204
-		        response.setStatus(204);       
+				// Page non modifiée, envoi de l'entête de code 304
+				response.setStatus(204);
+		        request.getRequestDispatcher("JSP/Messages.jsp").forward(request, response);
+		      
+			}
+			
+			}
+			catch(Exception e){
+				request.getRequestDispatcher("JSP/Messages.jsp").forward(request, response);
 			}
 	
 	}
