@@ -1,4 +1,5 @@
 package controller;
+import modele.GestionMessages;
 import modele.Message;
 import java.io.IOException;
 import java.util.HashMap;
@@ -33,7 +34,7 @@ public class ControllerMessage  extends HttpServlet  {
 	 */
 	public void init(ServletConfig sc) throws ServletException{
 		super.init(sc);
-		Map<String, List<Message>> listeMessages = new HashMap<String, List<Message>>();
+		GestionMessages listeMessages = new GestionMessages();
 		sc.getServletContext().setAttribute("modele", listeMessages);
 	
 	
@@ -43,37 +44,34 @@ public class ControllerMessage  extends HttpServlet  {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 	            throws ServletException, IOException {
-
-			// Récupération de la map dans le contexte applicatif
+		
+			// Récupération de GestionMessage dans le contexte applicatif
 			ServletContext ctx=getServletContext();  
-			Map<String, List<Message>> listeMessages = (Map<String, List<Message>> )ctx.getAttribute("modele");
+			GestionMessages listeMessages = (GestionMessages )ctx.getAttribute("modele");
 			
 			// Déclaration et définition de variables
 			String salon = (String) request.getSession().getAttribute("salon");
-			try{
-			String nb_message = String.valueOf(listeMessages.get(salon).size());
+			String nb_message = String.valueOf(listeMessages.getNbMessages(salon));
 			
+					
 			//Récupération du cookie utilisateur
 			Cookie cookie = getCookie(request, "utilisateur");
-			if (!cookie.getValue().equals(nb_message)){
-				//request.setAttribute("modele", listeMessages);
 			
+			// Si le nombre de message est différents du cookie utilisateur, la page est modifiée
+			if (!cookie.getValue().equals(nb_message)){
 				cookie.setValue(nb_message); 
 				response.addCookie(cookie);
-							
 				request.getRequestDispatcher("JSP/Messages.jsp").forward(request, response);
+
 			}else{
 				// Page non modifiée, envoi de l'entête de code 304
-				response.setStatus(204);
-		        request.getRequestDispatcher("JSP/Messages.jsp").forward(request, response);
+				response.setStatus(304);
+				
+				
+				
+				
 		      
 			}
-			
-			}
-			catch(Exception e){
-				request.getRequestDispatcher("JSP/Messages.jsp").forward(request, response);
-			}
-	
 	}
 	
 	@Override
@@ -81,6 +79,7 @@ public class ControllerMessage  extends HttpServlet  {
 	            throws ServletException, IOException {
 		
 		 request.getRequestDispatcher("JSP/Stockage.jsp").forward(request, response); 	
+		
 	 }
 
 	    /**

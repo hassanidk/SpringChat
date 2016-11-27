@@ -25,6 +25,9 @@
     <body>
         <h1>Qui de nouveau dans le Chat ?</h1>
         <h2> Salon <% out.println(session.getAttribute("salon")); %></h2>
-      		<jsp:include page="Affichage.jsp"/>
+        
+        
+      	 <jsp:include page="Affichage.jsp"/> 
+     
     </body>
 </html>
