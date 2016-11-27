@@ -6,6 +6,7 @@
 package modele;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,13 +17,12 @@ import java.util.Map;
 public class GestionMessages {
     
     static Map<String,List<Message>> listeMessages;
-    private String salon;
     
     /**
      * Constructeur par défaut
      */
     public GestionMessages(){
-        
+        listeMessages = new HashMap<String, List<Message>>();
     }
     
     /**
@@ -30,16 +30,17 @@ public class GestionMessages {
      * @param salon le nom du salon
      */
     public void setSalon(String salon){
-        this.salon = salon;
+    	List<Message> liste = new ArrayList<Message>();
+        listeMessages.put(salon,liste);
     }
     
     /**
      * 
      * @return Le nombre de messages du salon en question
      */
-    public int getNbMessages(){
-        if(GestionMessages.listeMessages.containsKey(this.salon)){
-            return GestionMessages.listeMessages.get(this.salon).size();
+    public int getNbMessages(String salon){
+        if(listeMessages.containsKey(salon)){
+            return listeMessages.get(salon).size();
         }
         else{
            return 0; 
@@ -51,19 +52,19 @@ public class GestionMessages {
      * 
      * @return La liste des messages du salon en question ou null
      */
-    public List<Message> getMessages(){
-        return GestionMessages.listeMessages.get(salon);
+    public List<Message> getMessages(String salon){
+        return listeMessages.get(salon);
     }
     
     /**
      * Ajout du message en fin de liste du salon concerné et création du salon si besoin
      * @param mes messageà ajouter au salon
      */
-    public void setNewMessage(Message mes){
-        if(!GestionMessages.listeMessages.containsKey(this.salon)){
-            GestionMessages.listeMessages.put(this.salon, new ArrayList<Message>());
+    public void setNewMessage(String salon, Message mes){
+        if(!listeMessages.containsKey(salon)){
+            listeMessages.put(salon, new ArrayList<Message>());
         }          
-        GestionMessages.listeMessages.get(this.salon).add(mes);
+        listeMessages.get(salon).add(mes);
     }
     
     
