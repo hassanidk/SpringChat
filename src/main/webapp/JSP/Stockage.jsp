@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="modele.GestionMessages,modele.Message,controller.ControllerMessage" %>
+<%@ page import="fr.univ_lyon1.mif03.chat.modele.GestionMessages,fr.univ_lyon1.mif03.chat.modele.Message,fr.univ_lyon1.mif03.chat.controller.ControllerMessage" %>
 <%@ page import="java.io.*,java.util.*, javax.servlet.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>

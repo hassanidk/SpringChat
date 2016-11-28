@@ -1,4 +1,4 @@
-package security;
+package fr.univ_lyon1.mif03.chat.securite;
 import java.io.IOException;
 
 import javax.servlet.Filter;
@@ -38,6 +38,7 @@ public class Filtre implements Filter {
 	        	/* Cas où l'utilisateur est sur la page de login*/
 	        	if (req.getRequestURI().contains("index") || req.getRequestURI().equals("/my-webapp/") || req.getRequestURI().contains("Init")){
 	        		chain.doFilter(request, response);
+	        		
 	        	}else{
 	        		res.sendRedirect("/my-webapp");
 	        	}

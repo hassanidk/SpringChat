@@ -1,6 +1,4 @@
-package controller;
-import modele.GestionMessages;
-import modele.Message;
+package fr.univ_lyon1.mif03.chat.controller;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -14,6 +12,9 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import fr.univ_lyon1.mif03.chat.modele.GestionMessages;
+import fr.univ_lyon1.mif03.chat.modele.Message;
 
 
 
@@ -34,10 +35,6 @@ public class ControllerMessage  extends HttpServlet  {
 	 */
 	public void init(ServletConfig sc) throws ServletException{
 		super.init(sc);
-		GestionMessages listeMessages = new GestionMessages();
-		sc.getServletContext().setAttribute("modele", listeMessages);
-	
-	
 	}
 
 	
