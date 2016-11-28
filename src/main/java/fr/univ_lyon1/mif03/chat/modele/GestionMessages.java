@@ -70,7 +70,12 @@ public class GestionMessages {
      * @return contenu du message en fonction de l'id
      */
     public String getMessage(String salon,int id){
-    	return listeMessages.get("salon").get(id).getMessage();
+    	try{
+    	
+    		return listeMessages.get(salon).get(id).getMessage();
+    	}catch(Exception e){
+    		return "";
+    	}
     }
     
     /**

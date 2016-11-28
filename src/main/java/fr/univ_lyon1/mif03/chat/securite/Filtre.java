@@ -37,6 +37,7 @@ public class Filtre implements Filter {
 	        	
 	        	/* Cas où l'utilisateur est sur la page de login*/
 	        	if (req.getRequestURI().contains("index") || req.getRequestURI().equals("/my-webapp/") || req.getRequestURI().contains("Init")){
+	        		
 	        		chain.doFilter(request, response);
 	        		
 	        	}else{

@@ -19,9 +19,9 @@
              
     </head>
     <body>
-        
+        ${message}
       <c:forEach items = "${messages}" var="item" >
-		${item}
+		${item.getMessage()}
 	</c:forEach>
      
     </body>
