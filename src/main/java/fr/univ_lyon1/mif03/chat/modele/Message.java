@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package modele;
+package fr.univ_lyon1.mif03.chat.modele;
 
 /**
  *
@@ -12,7 +12,7 @@ package modele;
 public class Message{
     private String pseudo;
     private String message;
-    
+    public Message(){}
     /**
      * Constructeur par défaut
      * @param pseudo le pseudo de l'utilisateur entrant le message

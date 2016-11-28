@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package modele;
+package fr.univ_lyon1.mif03.chat.modele;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -66,6 +66,24 @@ public class GestionMessages {
         }          
         listeMessages.get(salon).add(mes);
     }
+    /**
+     * @return contenu du message en fonction de l'id
+     */
+    public String getMessage(String salon,int id){
+    	return listeMessages.get("salon").get(id).getMessage();
+    }
     
+    /**
+     * @return liste des salon
+     */
+    public ArrayList<String> getAllSalon(){
+    	ArrayList<String> listeSalon = new ArrayList<String>();
+    	for (String salon : listeMessages.keySet()){
+    		listeSalon.add(salon);
+    		
+    	}
+    	return listeSalon;
+    	
+    }
     
 }

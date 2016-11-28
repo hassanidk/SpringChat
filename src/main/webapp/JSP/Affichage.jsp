@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="controller.ControllerMessage,modele.GestionMessages,modele.Message,java.io.*,java.util.*, javax.servlet.*" %>
+<%@ page import="fr.univ_lyon1.mif03.chat.controller.ControllerMessage,fr.univ_lyon1.mif03.chat.modele.*,java.io.*,java.util.*, javax.servlet.*" %>
 
       <%
 		
