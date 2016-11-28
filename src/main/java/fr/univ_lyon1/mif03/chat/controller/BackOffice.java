@@ -22,6 +22,13 @@ import fr.univ_lyon1.mif03.chat.modele.Users;
 @Controller
 
 public class BackOffice {
+	
+	@RequestMapping(value={"/","/index"	})
+	public String index(){
+		return "Init";
+		
+	}
+	
 	@RequestMapping(value ={"/back-office"}, method = RequestMethod.GET)
 	public ModelAndView indexBackOffice(){
 		ModelAndView model = new ModelAndView("/JSP/BackOffice.jsp");
@@ -29,11 +36,6 @@ public class BackOffice {
 		// On récupere la liste des salon et on l'affecte au modele
 		model.addObject("listeSalon",gestionMessage.getAllSalon());
 		return model;
-	}
-	@RequestMapping(value={"/","index"	}, method = RequestMethod.GET)
-	public String index(){
-		return "Connection";
-		
 	}
 	
 	@Autowired
@@ -45,7 +47,7 @@ public class BackOffice {
 		ArrayList<Message> listeMessages=(ArrayList<Message>) gestionMessage.getMessages(nomsalon);
 		if (listeMessages!=null)
 			model.addObject("messages",listeMessages);
-  		model.setViewName("MessagesSalon");
+  		model.setViewName("/JSP/MessagesSalon.jsp");
    	 
    	 return model;
 	}
@@ -60,12 +62,11 @@ public class BackOffice {
 	}
 	
 	@RequestMapping(value = {"/back-office/salon/{nomsalon}/{idmessage}"}, method = RequestMethod.GET)
-	public ModelAndView getMessageById(@PathVariable String nomsalon, int idmessage){
+	public ModelAndView getMessageById(@PathVariable String nomsalon, @PathVariable int idmessage){
 		ModelAndView model = new ModelAndView("MessagesSalon");
 		GestionMessages gestionMessage = (GestionMessages) context.getAttribute("modele");
-		String message = gestionMessage.getMessage(nomsalon, idmessage);
-		model.addObject("message",message);
-  		model.setViewName("MessagesSalon");
+		model.addObject("message",gestionMessage.getMessage(nomsalon, idmessage));
+  		model.setViewName("/JSP/MessagesSalon.jsp");
    	 
   		return model;
 		

@@ -22,7 +22,7 @@ import fr.univ_lyon1.mif03.chat.modele.Users;
  *
  * @author Simka
  */
-@WebServlet(urlPatterns = {"/Connection"})
+@WebServlet(urlPatterns = {"/Init"})
 public class Init extends HttpServlet {
     
     /**
@@ -58,7 +58,7 @@ public class Init extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    	System.out.println("on est dans le get index");
+    	
     	response.setContentType("text/html;charset=UTF-8");
     	request.getRequestDispatcher("HTML/index.html").forward(request, response);
     	
@@ -76,10 +76,10 @@ public class Init extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+    	
         response.setContentType("text/html;charset=UTF-8");
         String pseudo = request.getParameter("pseudo");
         String salon = request.getParameter("salon");
-        System.out.println("goppost");
         boolean inscrit = false;
         Users listeUsers = (Users)getServletContext().getAttribute("users");
 		for (String u: listeUsers.getListe()){
@@ -89,8 +89,8 @@ public class Init extends HttpServlet {
 		}
 	   
         if (pseudo.length() == 0|| inscrit == false  ){
-        	//request.getRequestDispatcher("HTML/index.html").forward(request, response);
-            response.sendRedirect("HTML/index.html");
+        	request.getRequestDispatcher("HTML/index.html").forward(request, response);
+            //response.sendRedirect("HTML/index.html");
         }
         else{
         	
