@@ -31,7 +31,7 @@ and open the template in the editor.
             </div>
             <div class="sectionBackoffice">
                 <h2 class="titreDiv">Contenu d'un message en particulier</h2>
-                <form:form method="GET" action="back-office/salon/{nomsalon}/{idmessage}" >					
+                <form:form method="GET" action="back-office/salon" >					
                     <input type="text"  id="nomSalon" name="nomsalon" placeholder="Nom du salon ..">
                     <input type="text"  id="idMessage" name="idmessage" placeholder="Numéro du message ..">
                     <input type="submit" value="Accéder au Message" id="btnContenuMessage"> 
