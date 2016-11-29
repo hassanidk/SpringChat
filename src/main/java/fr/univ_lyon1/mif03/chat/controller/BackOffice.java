@@ -3,6 +3,7 @@ package fr.univ_lyon1.mif03.chat.controller;
 import java.util.ArrayList;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,7 +29,19 @@ public class BackOffice {
 		return "Init";
 		
 	}
-	
+	@RequestMapping(value ={"/back-office"}, method = RequestMethod.POST)
+	public ModelAndView postBackOffice(HttpServletRequest request ){
+		ModelAndView model = new ModelAndView();
+		   String pseudo = request.getParameter("pseudoAdmin");
+		   request.getSession().setAttribute("pseudo", pseudo);
+		  // System.out.println("MON PSEUDO = "+pseudo);
+		   //if (pseudo.equals("admin")){
+			   model.setViewName("/JSP/BackOffice.jsp");
+		   //}else{
+			 //  model.setViewName("HTML/index.html");
+		   //}
+		return model;
+	}
 	@RequestMapping(value ={"/back-office"}, method = RequestMethod.GET)
 	public ModelAndView indexBackOffice(){
 		ModelAndView model = new ModelAndView("/JSP/BackOffice.jsp");
@@ -61,8 +74,8 @@ public class BackOffice {
 		
 	}
 	
-	@RequestMapping(value = {"/back-office/salon/{nomsalon}/{idmessage}"}, method = RequestMethod.GET)
-	public ModelAndView getMessageById(@PathVariable String nomsalon, @PathVariable int idmessage){
+	@RequestMapping(value = {"/back-office/salon"}, method = RequestMethod.GET)
+	public ModelAndView getMessageById(@RequestParam String nomsalon, @RequestParam int idmessage){
 		ModelAndView model = new ModelAndView("MessagesSalon");
 		GestionMessages gestionMessage = (GestionMessages) context.getAttribute("modele");		
                 model.addObject("message",gestionMessage.getMessage(nomsalon, idmessage));
