@@ -64,12 +64,11 @@ public class BackOffice {
 	@RequestMapping(value = {"/back-office/salon/{nomsalon}/{idmessage}"}, method = RequestMethod.GET)
 	public ModelAndView getMessageById(@PathVariable String nomsalon, @PathVariable int idmessage){
 		ModelAndView model = new ModelAndView("MessagesSalon");
-		GestionMessages gestionMessage = (GestionMessages) context.getAttribute("modele");
-		model.addObject("messages",gestionMessage.getMessage(nomsalon, idmessage));
-  		model.setViewName("/JSP/MessagesSalon.jsp");
-   	 
-  		return model;
-		
+		GestionMessages gestionMessage = (GestionMessages) context.getAttribute("modele");		
+                model.addObject("message",gestionMessage.getMessage(nomsalon, idmessage));
+  		model.setViewName("/JSP/MessagesSalonId.jsp");
+                
+                return model;
 	}
 	
 	

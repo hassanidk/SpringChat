@@ -17,7 +17,7 @@ and open the template in the editor.
             <h1 id="titreBackoffice"> BackOffice du Super Chat !</h1>
             <div class="sectionBackoffice">
                 <h2 class="titreDiv">Ajouter un Utilisateur</h2>
-	           <form:form method="POST" action="back-office/users" >					
+	            <form:form method="POST" action="back-office/users" >					
                         <input type="text"  id="pseudoUtilisateur" name="user" placeholder="Pseudo de l'utilisateur ..">
                         <input type="submit" value="Ajouter" id="btnAjoutUtilisateur"> 
                     </form:form>
@@ -31,6 +31,11 @@ and open the template in the editor.
             </div>
             <div class="sectionBackoffice">
                 <h2 class="titreDiv">Contenu d'un message en particulier</h2>
+                <form:form method="GET" action="back-office/salon/{nomsalon}/{idmessage}" >					
+                    <input type="text"  id="nomSalon" name="nomsalon" placeholder="Nom du salon ..">
+                    <input type="text"  id="idMessage" name="idmessage" placeholder="Numéro du message ..">
+                    <input type="submit" value="Accéder au Message" id="btnContenuMessage"> 
+                </form:form>
             </div>
 	</body>
 </html>
