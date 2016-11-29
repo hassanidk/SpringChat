@@ -9,14 +9,28 @@ and open the template in the editor.
 		<title> TP 2 Servlets - Index.html </title>
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <link href="CSS/index.css" rel="stylesheet" type="text/css">
+                
 	</head> 
 	<body>
-            <h1> Bienvenue dans mon appli de chat </h1>
-            <p> Entrez votre pseudo pour vous connecter </p>
-            <form method="POST" action="Init">
-                    <input type="text" placeholder="Votre pseudo .." name="pseudo">
-                    <input type="text" placeholder="Nom du salon.." name = "salon">
-                    <input type="submit" value="Connexion"> 
-            </form>
+            <h1 id="titreIndex"> Bienvenue dans mon appli de chat </h1>
+            <div id="divForm">
+                <div id="divUtilisateur">
+                    <h2 class="titreDiv"> Connexion à un salon </h2>
+                    <form method="POST" action="Init" id="formUtilisateur">
+                        <input type="text" placeholder="Votre pseudo .." name="pseudo" id="inputPseudo">
+                        <input type="text" placeholder="Nom du salon.." name = "salon" id="inputSalon">
+                        <input type="submit" value="Connexion" id="btnUtilisateur"> 
+                    </form> 
+                </div>
+                <div id="divAdmin">
+                    <h2 class="titreDiv"> Connexion au BackOffice </h2>
+                    <form method="POST" action="back-office" id="formAdmin">
+                        <input type="text" placeholder="Pseudo admin .." name="pseudoAdmin" id="pseudoAdmin">
+                        <input type="text" placeholder="Mot de passe ..." name = "mdpAdmin" id="passwordAdmin">
+                        <input type="submit" value="Connexion" id="btnAdmin"> 
+                    </form> 
+                </div>
+            </div>
 	</body>
 </html>
