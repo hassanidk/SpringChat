@@ -65,7 +65,7 @@ public class BackOffice {
 	public ModelAndView getMessageById(@PathVariable String nomsalon, @PathVariable int idmessage){
 		ModelAndView model = new ModelAndView("MessagesSalon");
 		GestionMessages gestionMessage = (GestionMessages) context.getAttribute("modele");
-		model.addObject("message",gestionMessage.getMessage(nomsalon, idmessage));
+		model.addObject("messages",gestionMessage.getMessage(nomsalon, idmessage));
   		model.setViewName("/JSP/MessagesSalon.jsp");
    	 
   		return model;

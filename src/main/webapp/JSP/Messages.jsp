@@ -22,8 +22,8 @@
              
     </head>
     <body>
-        <h1>Qui de nouveau dans le Chat ?</h1>
-        <h2> Salon <% out.println(session.getAttribute("salon")); %></h2>
+        <h1>Quoi de beau dans le Chat ?</h1>
+        <h2> Salon actuel : <span id="nomSalon"> <% out.println(session.getAttribute("salon")); %> </span> </h2>
         
         
       	 <jsp:include page="Affichage.jsp"/> 

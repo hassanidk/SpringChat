@@ -14,14 +14,14 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>PanelAdmin - Message Salon</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="Cache-control" content="public">
-   
-             
+        <meta http-equiv="Cache-control" content="public">       
     </head>
     <body>
         ${message}
-      <c:forEach items = "${messages}" var="item" >
-		${item.getMessage()}
+        <c:forEach items = "${messages}" var="item" >
+            <div>
+                ${item.getPseudo()} : ${item.getMessage()}  
+            </div>                       
 	</c:forEach>
      
     </body>
