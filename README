@@ -1,0 +1,91 @@
+Rendu du TP4 :TP 4 : initiation aux services Web (programmation REST)
+=====================================================================
+
+OTHOMENE Thibaut 11302812
+HASSANI  Kassim  11302141
+
+
+Voir http://liris.cnrs.fr/lionel.medini/enseignement/M1IF03/TP/TP_REST.html
+
+Technologies : Java EE, Spring
+
+Structure de l'application
+----------------------------------------------------------------------
+Un controlleur spring nommé "BackOffice" qui s'occupe de la gestion
+du back office intégralement.
+
+Le chat est géré avec des servlets. Nous avons fusionné les deux projets
+
+
+
+Commentaires
+----------------------------------------------------------------------
+ Lors du lancement du chat, un seul utilisateur a la possibilité de se
+ connecter. L'utilisateur "admin". En effet, cela est dû à une ancienne
+ directive lié à une précedente version du projet.
+
+ Pour pouvoir acceder au back-office, il faut que l'utilisateur se connecte
+ avec l'utilisateur "admin". Un lien nommé "pannelAdmin" sera disponible.
+
+ Le filtre de sécurité n'est pas applicable au back-office. En effet, tout
+ utilisateur de l'application peut s'y rendre via l'URL. Il est cependant
+ impossible pour des utilisateurs non connectés d'acceder à l'application
+
+
+ Lors de l'amélioration nous avons choisi la méthode utilisant les cookies
+
+ Nous avons implémentés toutes l'ensemble des fonctionalités liées à 
+ l'application métier. Se rendre à la partie "Gestion URI" pour l'explication
+ de nos URI.
+
+ La négociation de contenu à également était faite. Il est possible de 
+ récuperer une ressource JSON ou XML.
+
+ La gestion des exception a été implémenté. Nous avons modifié 
+ la configuration de la servlet pour pouvoir récuperé les différentes 
+ exceptions.
+ 
+
+
+
+ La partie hypermédia n'a pas été traité
+ Gestion URI
+ ----------------------------------------------------------------------
+ Nous avons essayé de mettre des URI se rapprochant de l'architecture REST
+ pour la partie back-office
+
+ /back-office:
+ 	Représente l'accueil du back office, le noeud parent
+ /back-office/salon:
+ 	Représente la liste de tous les salons
+ /back-office/salon/{nomsalon}
+ 	Représente un salon parmis les salons. Ainsi il est possible de manipuler
+ 	le salon via la liste des verbes HTTP (PUT, une mise à jour du salon,
+ 	DELETE, la suppression du salon ...)
+ /back-office/user:
+ 	Représente la liste de tous les utilisateurs du chat
+ /back-office/user/{id}:
+ 	Représente un utilisateur du chat. Il est possible de manipuler cet
+ 	utilisateur via la liste des verbes HTTP
+
+ NOTE : Nous avons des doutes concernant le noeud parent à l'id.
+ 		Mettre au pluriel user/salon ou les laisser au présent?
+ 
+ Problèmes
+ ----------------------------------------------------------------------
+La méthode get qui récupere l'ensemble des messages d'un salon ainsi que
+le nombre de message au sein de celui ci ne fonctionne pas lorsqu'on essaie
+de générer un fichier xml. En effet, il n'est pas possible d'ajouter deux 
+élements au modèle de la vue, lorsque l'on veut générer du contenu xml.
+Cependant pour la même méthode, le contenu json est généré
+
+Un dysfonctionement par moment lorsque l'ont modifie les url via la barre
+d'adresse côté back-office.
+
+ L'ensemble de nos fichiers liées à la vue ne sont pas correctement placés
+ Nous les avons mis sous le dossier webapp au lieu du dossier webinf
+
+ Reste à faire
+ -----------------------------------------------------------------------
+ Corriger les problèmes
+ S'occuper de la partie graphique de notre chat

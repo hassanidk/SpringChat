@@ -14,7 +14,7 @@ and open the template in the editor.
                  <link href="<c:url value="#" />" type="text/css" rel="stylesheet">
 	</head> 
 	<body>
-            <h1 id="titreBackoffice"> BackOffice du Super Chat !</h1>
+            <h1 id="titreBackoffice"> BackOffice du Chat !</h1>
            
             
             <div class="sectionBackoffice">

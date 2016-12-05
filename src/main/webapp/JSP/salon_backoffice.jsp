@@ -16,7 +16,7 @@ and open the template in the editor.
 	<body>
 	${erreur}
 		<div class="sectionBackoffice">
-			<h2 class="titreDiv"> Liste des message par salon</h2>
+			<h2 class="titreDiv"> Liste des messages par salon</h2>
 				<p> Pour avoir la liste des messages d'un salon ainsi que son nombre de message, veuillez cliquer sur celui-ci </p>
 			    <c:forEach var="nomSalon" items="${listeSalon}" >
 					<a href="salon/${nomSalon}"> ${nomSalon}</a>			
@@ -32,7 +32,7 @@ and open the template in the editor.
                 </form:form>
             </div>
             <div class="sectionBackoffice">
-                <h2 class="titreDiv">Liste de message après un id</h2>
+                <h2 class="titreDiv">Liste de messages après un id</h2>
                 <form:form method="GET" action="salon$" >					
                     <input type="text"  id="nomSalon" name="nomsalon" placeholder="Nom du salon ..">
                     <input type="text"  id="idMessage" name="idmessage" placeholder="Numéro du message ..">
@@ -48,6 +48,8 @@ and open the template in the editor.
                     <input type="submit" value="Ajouter message" id="btnContenuMessage"> 
                 </form:form>
             </div>
-	
+            
+            <div> Pour supprimer le dernier message d'un salon : DELETE /back-office/salon/edit/{nomsalon}"</div>
+			<div> Pour modifier le dernier message d'un salon : PUT /back-office/salon/{nomsalon}</div>
 	</body>
 </html>

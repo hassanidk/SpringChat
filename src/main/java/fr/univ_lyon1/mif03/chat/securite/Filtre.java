@@ -4,8 +4,6 @@ import java.io.IOException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -18,7 +16,7 @@ import javax.servlet.http.HttpSession;
 @WebFilter("/*")
 public class Filtre implements Filter {
 
-	private ServletContext context;
+	
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
 	//	this.context = filterConfig.getServletContext();
@@ -49,7 +47,11 @@ public class Filtre implements Filter {
 	        	if (req.getRequestURI().contains("index")){
 	        		res.sendRedirect("/my-webapp");
 	        	}else{
-	        		chain.doFilter(request, response);
+	        		
+	        			chain.doFilter(request, response);
+	        		
+	        			
+	        	
 	        	}
 	        	
 	        }

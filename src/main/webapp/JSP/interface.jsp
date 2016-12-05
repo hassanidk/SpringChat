@@ -6,7 +6,7 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>TP 2 Servlets - Interface.html</title>
+        <title>TP 2 Servlets - Interface</title>
         <meta charset="UTF-8">
         <link href="CSS/style.css" type="text/css" rel="stylesheet">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
