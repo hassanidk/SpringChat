@@ -58,7 +58,6 @@ public class Init extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    	
     	response.setContentType("text/html;charset=UTF-8");
     	request.getRequestDispatcher("HTML/index.html").forward(request, response);
     	
@@ -76,14 +75,12 @@ public class Init extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    	
         response.setContentType("text/html;charset=UTF-8");
         String pseudo = request.getParameter("pseudo");
         String salon = request.getParameter("salon");
         boolean inscrit = false;
         Users listeUsers = (Users)getServletContext().getAttribute("users");
 		for (String u: listeUsers.getListe()){
-			System.out.println(u);
 			if (u.equals(pseudo))
 				inscrit = true;
 		}
@@ -96,7 +93,12 @@ public class Init extends HttpServlet {
         	
             request.getSession().setAttribute("pseudo", pseudo);
             request.getSession().setAttribute("salon", salon);
-            
+            if (pseudo.equals("admin")){
+            	request.setAttribute("panelAdmin", "panelAdmin");
+            }else{
+            	request.setAttribute("panelAdmin", "null");
+            }
+            	
             /*
              * On crée un cookie utilisateur. 
              * Lors de la création, aucun message n'es mémorisé côté client
@@ -104,8 +106,8 @@ public class Init extends HttpServlet {
             Cookie cookie = new Cookie("utilisateur", "1");
             
             response.addCookie(cookie);
-          //  request.getRequestDispatcher("HTML/interface.html").forward(request, response);
-            response.sendRedirect("HTML/interface.html");
+            request.getRequestDispatcher("JSP/interface.jsp").forward(request, response);
+            //response.sendRedirect("JSP/interface.jsp");
             
         }
        
