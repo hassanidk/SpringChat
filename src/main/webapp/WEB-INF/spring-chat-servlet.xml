@@ -25,6 +25,16 @@
         </list>
     </property>
 </bean>
+<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+   <property name="exceptionMappings">
+      <props>
+         <prop key="fr.univ_lyon1.mif03.chat.exception">
+            /JSP/ExceptionPage.jsp
+         </prop>
+      </props>
+   </property>
+   <property name="defaultErrorView" value="error"/>
+</bean>
 <!-- org.springframework.web.servlet.view.UrlBasedViewResolver 
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">

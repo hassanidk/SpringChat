@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import fr.univ_lyon1.mif03.chat.exception.CustomException;
 import fr.univ_lyon1.mif03.chat.modele.GestionMessages;
 import fr.univ_lyon1.mif03.chat.modele.Message;
 import fr.univ_lyon1.mif03.chat.modele.Users;
@@ -43,11 +43,9 @@ public class BackOffice {
 
 	/*********** ACCUEIL BACK-OFFICE **************/
 	/*
-	 * Rédirige vers l'accueil du back office
-	 * Contient:
-	 * 		- Un lien vers la gestion utilisateur
-	 * 		- Un lien vers la gestion des salons
-	 * 		- Un lien vers la gestion des messages
+	 * Redirige vers l'accueil du back office Contient: - Un lien vers la
+	 * gestion utilisateur - Un lien vers la gestion des salons - Un lien vers
+	 * la gestion des messages
 	 */
 	@RequestMapping(value = { "/back-office" }, method = RequestMethod.GET)
 	public String indexBackOffice(HttpServletRequest request) {
@@ -57,13 +55,12 @@ public class BackOffice {
 
 	/********************* GESTION SALON **********************/
 	/*
-	 * Interface d'accueil de la gestion de salon
-	 * Possibilités :
-	 * 		- Avoir la liste des messages par salon, ainsi que le nombre de message par salon
-	 * 		- Avoir le contenu d'un message en particulier en fonction du salon et de l'id du message
-	 * 		- Récuperer tous les messages d'un salon suivant un certain id
-	 * 		- Suppression de salon
-	 * 		- Suppression du dernier message d'un salon
+	 * Interface d'accueil de la gestion de salon Possibilités : - Avoir la
+	 * liste des messages par salon, ainsi que le nombre de message par salon -
+	 * Avoir le contenu d'un message en particulier en fonction du salon et de
+	 * l'id du message - Récuperer tous les messages d'un salon suivant un
+	 * certain id - Suppression de salon - Suppression du dernier message d'un
+	 * salon
 	 */
 	@RequestMapping(value = { "/back-office/salon" }, method = RequestMethod.GET)
 	public ModelAndView getInterfaceGestionSalon() {
@@ -77,57 +74,70 @@ public class BackOffice {
 
 	// -- Permet de recuperer un message en fonction du nom de salon et de l'id
 	@RequestMapping(value = { "/back-office/salon*" }, method = RequestMethod.GET)
-	public ModelAndView getMessageById(@RequestParam String nomsalon, @RequestParam int idmessage) {
+	public ModelAndView getMessageById(@RequestParam String nomsalon, @RequestParam int idmessage)
+			throws CustomException {
 		ModelAndView model = new ModelAndView("/JSP/MessagesSalon.jsp");
 		GestionMessages gestionMessage = (GestionMessages) context.getAttribute("modele");
-		model.addObject("message", gestionMessage.getMessage(nomsalon, idmessage)); 
+		String message = gestionMessage.getMessage(nomsalon, idmessage);
+		if (message.equals(""))
+			throw new CustomException("Message inexistant");
+		model.addObject("message", message);
 		return model;
 	}
 
-	// Récupérer tous les messages envoyés après un message donné, dont l'id sera passé en paramètre
-	@RequestMapping(value = {"/back-office/salon$"}, method = RequestMethod.GET)
-	public ModelAndView getAllMessageAfterId(@RequestParam String nomsalon, @RequestParam int idmessage) {
+	// Récupérer tous les messages envoyés après un message donné, dont l'id
+	// sera passé en paramètre
+	@RequestMapping(value = { "/back-office/salon$" }, method = RequestMethod.GET)
+	public ModelAndView getAllMessageAfterId(@RequestParam String nomsalon, @RequestParam int idmessage)
+			throws CustomException {
 		ModelAndView model = new ModelAndView("/JSP/MessagesSalon.jsp");
 		GestionMessages gestionMessage = (GestionMessages) context.getAttribute("modele");
-		ArrayList<Message> listeMessages=(ArrayList<Message>) gestionMessage.getMessages(nomsalon);
+		ArrayList<Message> listeMessages = (ArrayList<Message>) gestionMessage.getMessages(nomsalon);
+
 		if (listeMessages == null)
-			return model;
+			throw new CustomException("Salon inexistant");
 		ArrayList<Message> listeTemp = new ArrayList<Message>(listeMessages);
 		if (idmessage > listeTemp.size())
-			return model;
-		for (int i =0;i <idmessage;i++) 
+			throw new CustomException("L'id de message est inexistant");
+		for (int i = 0; i < idmessage; i++)
 			listeTemp.remove(i);
-		model.addObject("messages_id",listeTemp);
+		model.addObject("messages_id", listeTemp);
 		return model;
 	}
 	// Récupere la liste de tous les messages d'un salon ainsi que le
 	// nombre de message de celui ci
+
 	@RequestMapping(value = { "/back-office/salon/{nomsalon}" }, method = RequestMethod.GET)
-	public ModelAndView getAllMessagesBySalon(@PathVariable String nomsalon) {
+	public ModelAndView getAllMessagesBySalon(@PathVariable String nomsalon) throws CustomException {
 		ModelAndView model = new ModelAndView("/JSP/MessagesSalon.jsp");
 		GestionMessages gestionMessage = (GestionMessages) context.getAttribute("modele");
 		ArrayList<Message> listeMessages = (ArrayList<Message>) gestionMessage.getMessages(nomsalon);
 		int nbMessages = gestionMessage.getNbMessages(nomsalon);
 		if (listeMessages != null) {
+
 			model.addObject("messages", listeMessages);
 			model.addObject("nbmessages", nbMessages);
+
+		} else {
+			throw new CustomException("Salon inexistant");
 		}
-		
 
 		return model;
 	}
-	// -- AJOUT MESSAGE
+
+	// -- AJOUT MESSAGE DANS UN SALON
 	@RequestMapping(value = { "/back-office/salon" }, method = RequestMethod.POST)
-	public ModelAndView addMessage(@RequestParam String nomSalon, @RequestParam String message) {
+	public ModelAndView addMessage(@RequestParam String nomSalon, @RequestParam String message) throws CustomException {
 		ModelAndView model = new ModelAndView("/JSP/salon_backoffice.jsp");
 		GestionMessages gestionMessage = (GestionMessages) context.getAttribute("modele");
-		try{
+		if (gestionMessage.getSalon(nomSalon) != null) {
 			gestionMessage.getSalon(nomSalon).add(new Message("admin", message));
 			model.addObject("listeSalon", gestionMessage.getAllSalon());
-		}catch(Exception e){
-			model.addObject("erreur", "Le salon n'existe pas");
+		} else {
+			// On diffuse l'exception dans le cas où le salon n'existe pas
+			throw new CustomException("Salon inexistant");
 		}
-		
+
 		return model;
 	}
 
@@ -136,25 +146,26 @@ public class BackOffice {
 	public ModelAndView delMessageBYSalon(@PathVariable String nomsalon) {
 		ModelAndView model = new ModelAndView("/JSP/salon_backoffice.jsp");
 		GestionMessages gestionMessage = (GestionMessages) context.getAttribute("modele");
+		// LE cas où le salon n'existe pas est géré côté serveur
 		gestionMessage.removeSalon(nomsalon);
 		model.addObject("listeSalon", gestionMessage.getAllSalon());
 		return model;
 	}
 
-	
-  // SUPPRESSION DU DERNIER MESSAGE D'UN SALON
-  
-	  @RequestMapping(value = {"/back-office/salon/{nomsalon}*"}, method = RequestMethod.DELETE) 
-	  public ModelAndView removeLastMessage(@PathVariable String nomsalon){ 
-		  ModelAndView model = new ModelAndView("blablabla");
-		  GestionMessages gestionMessage = (GestionMessages) context.getAttribute("modele"); 
-		  int lastMessage = gestionMessage.getNbMessages(nomsalon); 
-		  if (lastMessage >0)
-			  gestionMessage.getSalon(nomsalon).remove(lastMessage-1); 
-		  return model; 
-		  }
-	 
-	
+	// SUPPRESSION DU DERNIER MESSAGE D'UN SALON
+
+	@RequestMapping(value = { "/back-office/salon/edit/{nomsalon}" }, method = RequestMethod.DELETE)
+	public ResponseEntity<Integer> removeLastMessage(@PathVariable String nomsalon) {
+
+		GestionMessages gestionMessage = (GestionMessages) context.getAttribute("modele");
+		int lastMessage = gestionMessage.getNbMessages(nomsalon);
+
+		if (lastMessage > 0) {
+			gestionMessage.getSalon(nomsalon).remove(lastMessage);
+			return new ResponseEntity<Integer>(lastMessage, HttpStatus.OK);
+		}
+		return new ResponseEntity<Integer>(HttpStatus.NOT_FOUND);
+	}
 
 	// MODIFICATION DU DERNIER MESSAGE D'UN SALON
 	/**
@@ -163,13 +174,15 @@ public class BackOffice {
 	 * @return
 	 */
 	@RequestMapping(value = { "/back-office/salon/{nomsalon}" }, method = RequestMethod.PUT)
-	public ModelAndView setNewLastMessage(@PathVariable String nomsalon, @RequestParam("message") String message) {
-		ModelAndView model = new ModelAndView("blablabla");
+	public ResponseEntity<String> setNewLastMessage(@PathVariable String nomsalon, @RequestBody String message) {
 		GestionMessages gestionMessage = (GestionMessages) context.getAttribute("modele");
 		int lastMessage = gestionMessage.getNbMessages(nomsalon);
-		if (lastMessage > 0)
+		if (lastMessage > 0) {
 			gestionMessage.getSalon(nomsalon).get(lastMessage).setMessage(message);
-		return model;
+			return new ResponseEntity<String>(message, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+
 	}
 
 	/********************* GESTION UTILISATEUR **********************/
@@ -185,7 +198,7 @@ public class BackOffice {
 		Users listeUsers = (Users) context.getAttribute("users");
 		if (listeUsers != null)
 			model.addObject("listeUsers", listeUsers.getListe());
-
+		// Pas d'exception si la liste d'utilisateur est nulle..
 		return model;
 	}
 
@@ -215,7 +228,7 @@ public class BackOffice {
 
 		if (listeSalonByUser != null) {
 			model.addObject("listeSalon", listeSalonByUser);
-		}
+		} // On ne déclenche pas d'erreur dans le cas échéant
 		return model;
 	}
 

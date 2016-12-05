@@ -21,16 +21,18 @@ and open the template in the editor.
 					<input type="submit" value="Ajouter" id="btnAjoutUtilisateur"> 
 				</form:form>
 		</div>
-		Modifier pseudo : Requete  { put users/id}
 		<div class="sectionBackoffice">
 			<h2 class="titreDiv">Liste utilisateurs</h2>
+			Cliquez sur un utilisateur pour avoir la liste des salons auxquels il a participé
 				<c:forEach items = "${listeUsers}" var="item" varStatus="loop" >
-            <div>
-                <a href="users/${loop.index}">${item}  </a>
-            </div>                       
-	</c:forEach>
+		            <div>
+		                <a href="users/${loop.index}">${item}  </a>
+		            </div>                       
+				</c:forEach>
 		</div>
-	
+		
+		<div> Pour modifier le nom d'un utilisateur  : PUT /back-office/users/{id} , avec newpseudo en requestbody</div>
+		
 	
 	</body>
 </html>
