@@ -5,22 +5,35 @@
  */
 package fr.univ_lyon1.mif03.chat.modele;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  *
  * @author thibom
  */
-public class GestionMessages {
+
+public class GestionMessages implements Serializable {
     
-    static Map<String,List<Message>> listeMessages;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	static Map<String,List<Message>> listeMessages;
     
     /**
      * Constructeur par défaut
      */
+	
     public GestionMessages(){
         listeMessages = new HashMap<String, List<Message>>();
     }
@@ -29,15 +42,36 @@ public class GestionMessages {
      * Defini le salon courant pour l'instance
      * @param salon le nom du salon
      */
+    
     public void setSalon(String salon){
     	List<Message> liste = new ArrayList<Message>();
         listeMessages.put(salon,liste);
     }
+    /**
+     *
+     * @param salon , le nom du salon
+     * @return la liste de message du salon
+     */
+    public List<Message> getSalon(String salon){
+    	return listeMessages.get(salon);
+    }
     
+    /**
+     * Permet de supprimer un salon
+     * @param salon, le nom du salon
+     */
+    public void removeSalon(String salon){
+    	try {
+    		listeMessages.remove(salon);
+    	}catch(Exception e){
+    		
+    	}
+    }
     /**
      * 
      * @return Le nombre de messages du salon en question
      */
+    
     public int getNbMessages(String salon){
         if(listeMessages.containsKey(salon)){
             return listeMessages.get(salon).size();
@@ -78,9 +112,11 @@ public class GestionMessages {
     	}
     }
     
+    
     /**
      * @return liste des salon
      */
+    
     public ArrayList<String> getAllSalon(){
     	ArrayList<String> listeSalon = new ArrayList<String>();
     	for (String salon : listeMessages.keySet()){
@@ -89,6 +125,26 @@ public class GestionMessages {
     	}
     	return listeSalon;
     	
+    }
+    /**
+     * 
+     * @param id, l'id d'un utilisateur
+     * @return la liste des salons où l'utilisateur à posté
+     */
+    public List<String> getAllSalonByUser(String pseudo){
+    List<String> listeSalon = new ArrayList<String>();
+    
+    for (String salon : listeMessages.keySet()){
+    	for (Message m : listeMessages.get(salon)){
+    		if (m.getPseudo().equals(pseudo))
+    			if (!listeSalon.contains(salon))
+    				listeSalon.add(salon);
+    		
+    	}
+    }
+    return listeSalon;
+    
+    // SU
     }
     
 }

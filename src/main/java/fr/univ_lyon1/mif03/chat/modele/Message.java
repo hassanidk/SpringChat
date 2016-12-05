@@ -5,10 +5,14 @@
  */
 package fr.univ_lyon1.mif03.chat.modele;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  *
  * @author thibom
  */
+@XmlRootElement(name="Message")
 public class Message{
     private String pseudo;
     private String message;
@@ -27,6 +31,7 @@ public class Message{
      * 
      * @return le contenu textuel du message
      */
+    @XmlElement
     public String getMessage(){
         return message;
     }
@@ -35,7 +40,17 @@ public class Message{
      * 
      * @return Le pseudo de l'auteur du message
      */
+    @XmlElement
     public String getPseudo(){
         return pseudo;
+    }
+    
+    public void setMessage(String message){
+    	this.message = message;
+    }
+    
+   
+    public void setPseudo(String pseudo){
+    	this.pseudo = pseudo;
     }
 }

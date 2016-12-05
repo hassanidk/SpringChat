@@ -49,6 +49,7 @@ public class ControllerMessage  extends HttpServlet  {
 			// Déclaration et définition de variables
 			String salon = (String) request.getSession().getAttribute("salon");
 			String nb_message = String.valueOf(listeMessages.getNbMessages(salon));
+			String pseudo = (String) request.getSession().getAttribute("pseudo");
 			
 					
 			//Récupération du cookie utilisateur
