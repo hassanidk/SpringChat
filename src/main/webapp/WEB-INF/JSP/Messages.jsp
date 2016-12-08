@@ -15,7 +15,8 @@
         <title>TP 2 Servlets - Messages.jsp</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="Cache-control" content="public">
-        <link href="<c:url value="CSS/messages.css" />" type="text/css" rel="stylesheet">
+        
+        <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
        <!--  <link href="../CSS/messages.css" type="text/css" rel="stylesheet">--> 
         <!-- Va permettre de rafraichir la page toutes les 5 secondes -->
    
