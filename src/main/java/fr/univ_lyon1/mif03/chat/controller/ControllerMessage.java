@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.univ_lyon1.mif03.chat.modele.GestionMessages;
+import fr.univ_lyon1.mif03.chat.utils.Utils;
 
 @WebServlet(urlPatterns = { "/Controller" })
 public class ControllerMessage extends HttpServlet {
@@ -51,7 +52,7 @@ public class ControllerMessage extends HttpServlet {
 		if (!cookie.getValue().equals(nb_message)) {
 			cookie.setValue(nb_message);
 			response.addCookie(cookie);
-			request.getRequestDispatcher("JSP/Messages.jsp").forward(request, response);
+			request.getRequestDispatcher(Utils.prefix+"JSP/Messages.jsp").forward(request, response);
 
 		} else {
 			// Page non modifiée, envoi de l'entête de code 304
@@ -64,7 +65,7 @@ public class ControllerMessage extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		request.getRequestDispatcher("JSP/Stockage.jsp").forward(request, response);
+		request.getRequestDispatcher(Utils.prefix+"JSP/Stockage.jsp").forward(request, response);
 
 	}
 

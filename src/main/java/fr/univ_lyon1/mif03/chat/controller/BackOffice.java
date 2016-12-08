@@ -6,6 +6,8 @@ import java.util.List;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +39,7 @@ public class BackOffice {
 	// ------- Redirige vers l'index de l'application
 	@RequestMapping(value = { "/", "/index" })
 	public String index() {
-		return "Init";
+		return "HTML/index.html";
 
 	}
 
@@ -116,7 +118,7 @@ public class BackOffice {
 		if (listeMessages != null) {
 
 			model.addObject("messages", listeMessages);
-			model.addObject("nbmessages", nbMessages);
+	//		model.addObject("nbmessages", nbMessages);
 
 		} else {
 			throw new CustomException("Salon inexistant");
@@ -241,5 +243,48 @@ public class BackOffice {
 		listeUsers.renameUser(id, newpseudo);
 		return new ResponseEntity<String>(newpseudo, HttpStatus.OK);
 	}
-
+	
+	/**
+	 * PARTIE AJAX
+	 * 
+	 */
+	// Redirige vers le chat en AJAX
+	@RequestMapping(value = "/chat", method = RequestMethod.GET)
+	public String getChat(){
+		return "HTML/chat.html";
+	}
+	
+	// Redirige ve
+	@RequestMapping(value = {"/chat/{salon}"}, method = RequestMethod.GET)
+	public String getMessage(@PathVariable("salon")String salon){
+		GestionMessages gestionMessage = (GestionMessages) context.getAttribute("modele");
+		ArrayList<Message> listeMessage = (ArrayList<Message>)gestionMessage.getSalon(salon);
+		JSONArray jarr = new JSONArray();
+		for (Message m : listeMessage){
+			JSONObject jobj = new JSONObject();
+			jobj.put("auteur", m.getPseudo());
+			jobj.put("message", m.getMessage());
+			jarr.put(jobj);
+			
+		}
+		JSONObject jobjroot = new JSONObject();
+		jobjroot.put("id", salon);
+		jobjroot.put("messages", jarr);
+		
+		return jobjroot.toString();
+	}
+	// AJout d'un message dans un salon
+	@RequestMapping(value = {"/chat/{salon}"}, method = RequestMethod.POST)
+	public String postMessage(@PathVariable("salon") String salon, @RequestParam String json){
+		GestionMessages gestionMessage = (GestionMessages) context.getAttribute("modele");
+		ArrayList<Message> listeMessage = (ArrayList<Message>)gestionMessage.getSalon(salon);
+		JSONArray jarr = new JSONArray(json);
+		for (int i = 0; i < jarr.length(); ++i){
+			JSONObject jobj = jarr.getJSONObject(i);
+			Message newMessage = new Message(jobj.getString("auteur"), jobj.getString("message"));
+			listeMessage.add(newMessage);
+		}
+		return "";
+	}
+	
 }

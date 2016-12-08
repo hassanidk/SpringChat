@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import fr.univ_lyon1.mif03.chat.utils.Utils;
+
 @WebServlet(urlPatterns = {"/Logout"})
 public class Logout extends HttpServlet{
 	
@@ -19,7 +21,7 @@ public class Logout extends HttpServlet{
 	@Override
 		protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		
-		request.getRequestDispatcher("HTML/index.html").forward(request, response);
+		request.getRequestDispatcher(Utils.prefix+"HTML/index.html").forward(request, response);
 	 }
 	 
 	 
