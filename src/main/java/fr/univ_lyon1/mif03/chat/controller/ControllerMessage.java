@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.univ_lyon1.mif03.chat.modele.GestionMessages;
-import fr.univ_lyon1.mif03.chat.utils.Utils;
+import fr.univ_lyon1.mif03.chat.service.Utils;
 
 @WebServlet(urlPatterns = { "/Controller" })
 public class ControllerMessage extends HttpServlet {
