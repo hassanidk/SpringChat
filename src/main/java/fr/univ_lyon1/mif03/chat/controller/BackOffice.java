@@ -252,10 +252,37 @@ public class BackOffice {
 	// NOTE : Le controlleur Spring fais le mapping sur chaque URI
 	// Nous sommes obligés de faire un mapping .
 	@RequestMapping(value = {"/chat*"})
-	public String test(){
+	public String homechat(){
 		return "HTML/chat.html";
 	}
-	
+	@RequestMapping(value = {"/chat/salon"}, method = RequestMethod.GET)
+	public @ResponseBody String getSalon(){
+		GestionMessages gestionMessage = (GestionMessages) context.getAttribute("modele");
+		JSONObject jobjroot = new JSONObject();
+		JSONArray jarr = new JSONArray();
+		for (String salon : gestionMessage.getAllSalon()){
+			JSONObject jobj = new JSONObject();
+			jobj.put("salon", salon);
+			jarr.put(jobj);
+		}
+		jobjroot.put("salons", jarr);
+		return jobjroot.toString();
+	}
+	// Création salon
+	@RequestMapping(value = {"/chat/salon"}, method = RequestMethod.POST)
+	public @ResponseBody String setSalon(@RequestParam String nomsalon){
+		
+		GestionMessages gestionMessage = (GestionMessages) context.getAttribute("modele");
+		JSONObject jobjroot = new JSONObject();
+		if (gestionMessage.getSalon(nomsalon) ==null){
+			gestionMessage.setSalon(nomsalon);
+			jobjroot.put("message", "Salon créé");
+		}else{
+			jobjroot.put("message", "Salon déjà existant");
+		}
+		
+		return jobjroot.toString();
+	}
 	// Recupere la liste des messages du salon
 	// NOTE : Faire en sorte de recuperer que les messages non dispo coté client
 	@RequestMapping(value = {"/chat/salon/{salon}"}, method = RequestMethod.GET)
@@ -267,21 +294,17 @@ public class BackOffice {
 		if (listeMessage ==null || listeMessage.size()==idmessage){
 			return "";//jobjroot.toString();
 		}else{
-			
-		
-		
-			
-		JSONArray jarr = new JSONArray();
-		int index = 0;
-		for (Message m : listeMessage){
-			index++;
-			if (index >idmessage){
-				JSONObject jobj = new JSONObject();
-				jobj.put("auteur", m.getPseudo());
-				jobj.put("message", m.getMessage());
-				
-				jarr.put(jobj);
-			}
+			JSONArray jarr = new JSONArray();
+			int index = 0;
+			for (Message m : listeMessage){
+				index++;
+				if (index >idmessage){
+					JSONObject jobj = new JSONObject();
+					jobj.put("auteur", m.getPseudo());
+					jobj.put("message", m.getMessage());
+					
+					jarr.put(jobj);
+				}
 			
 		}
 		jobjroot.put("messages", jarr);
@@ -293,15 +316,19 @@ public class BackOffice {
 	@RequestMapping(value = {"/chat/salon/{salon}"}, method = RequestMethod.POST)
 	public @ResponseBody String postMessage(@PathVariable("salon") String salon,  @RequestParam String json){
 		
-		System.out.println(json);
-		System.out.println(salon);
+		
 		GestionMessages gestionMessage = (GestionMessages) context.getAttribute("modele");
 		ArrayList<Message> listeMessage = (ArrayList<Message>)gestionMessage.getSalon(salon);
 		// Cas où le salon n'existe pas
 		if (listeMessage == null){
 			gestionMessage.setSalon(salon);
 		}
+		
 		JSONObject jobj = new JSONObject(json);
+		// Cas où le message est vide
+		if (jobj.getString("message").equals("")){
+			return "";
+		}
 		Message newMessage = new Message(jobj.getString("auteur"), jobj.getString("message"));
 		gestionMessage.getSalon(salon).add(newMessage);
 		

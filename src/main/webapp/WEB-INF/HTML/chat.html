@@ -5,29 +5,35 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <html>
-	<head>
-		<title> CHAT AJAX</title>
-                <meta charset="UTF-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <link href="resources/css/index.css" rel="stylesheet" type="text/css">
-                
-	</head> 
-	<body>
-		<div id="chat">
-			<div id="chat_scroll">
-				 <div hidden id ="idmessage" >0</div>
-				 <span id="pseudoMessage"> </span>
-            	<span id="separationMessage"> </span>
-            	<span id="contenuMessage">  </span>
-			</div>
-			<textarea rows="1" id="chattext"></textarea>
-			<button onclick="sendMessage()"> Envoyer</button>
+<head>
+<title>CHAT AJAX</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="resources/css/index.css" rel="stylesheet" type="text/css">
+
+</head>
+<body>
+	<div id="chat">
+		<div id="chat_scroll">
+			<div hidden id="idmessage">0</div>
+			<span id="pseudoMessage"> </span> 
+			<span id="separationMessage"></span> 
+			<span id="contenuMessage"> </span>
 		</div>
-		
-		
-		      <!-- SCRIPT JS -->
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-		<script type="text/javascript" src="resources/js/chat.js" /></script>
-		
-	</body>
+		<textarea rows="1" id="chattext"></textarea>
+		<button onclick="sendMessage()">Envoyer</button>
+	</div>
+
+	<div id="listeSalon">
+	</div>
+		<textarea rows="1" id="newsalon"></textarea>
+		<button onclick="newsalon()">Créer nouveau salon</button>
+	
+	<button onclick="quitter()"> Se deconnecter</button>
+	<!-- SCRIPT JS -->
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<script type="text/javascript" src="resources/js/chat.js" /></script>
+	
+</body>
 </html>
