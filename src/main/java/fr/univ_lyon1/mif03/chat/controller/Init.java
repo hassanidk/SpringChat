@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import fr.univ_lyon1.mif03.chat.modele.GestionMessages;
 import fr.univ_lyon1.mif03.chat.modele.Users;
-import fr.univ_lyon1.mif03.chat.utils.Utils;
+import fr.univ_lyon1.mif03.chat.service.Utils;
 
 /**
  *
@@ -86,7 +86,7 @@ public class Init extends HttpServlet {
 				inscrit = true;
 		}
 	   
-        if (pseudo.length() == 0|| inscrit == false  ){
+        if (inscrit == false  ){
         	request.getRequestDispatcher(Utils.prefix+"HTML/index.html").forward(request, response);
             //response.sendRedirect("HTML/index.html");
         }
@@ -99,7 +99,11 @@ public class Init extends HttpServlet {
             }else{
             	request.setAttribute("panelAdmin", "null");
             }
-            	
+            // Cas où l'on se connecte au chat Ajax
+            if (request.getParameter("act").contains("AJAX")){
+            //	request.getRequestDispatcher(Utils.prefix+"HTML/chat.html?ok").forward(request, response);
+            	response.sendRedirect("chat.html?pseudo="+pseudo+"&salon="+salon);
+            }else{
             /*
              * On crée un cookie utilisateur. 
              * Lors de la création, aucun message n'es mémorisé côté client
@@ -109,7 +113,7 @@ public class Init extends HttpServlet {
             response.addCookie(cookie);
             request.getRequestDispatcher(Utils.prefix+"JSP/interface.jsp").forward(request, response);
             //response.sendRedirect("JSP/interface.jsp");
-            
+            }
         }
        
     }

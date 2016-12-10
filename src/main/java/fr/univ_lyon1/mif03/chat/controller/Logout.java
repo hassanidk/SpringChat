@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import fr.univ_lyon1.mif03.chat.utils.Utils;
+import fr.univ_lyon1.mif03.chat.service.Utils;
 
 @WebServlet(urlPatterns = {"/Logout"})
 public class Logout extends HttpServlet{

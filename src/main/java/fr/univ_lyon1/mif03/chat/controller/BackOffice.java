@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import fr.univ_lyon1.mif03.chat.exception.CustomException;
@@ -107,14 +108,14 @@ public class BackOffice {
 		return model;
 	}
 	// Récupere la liste de tous les messages d'un salon ainsi que le
-	// nombre de message de celui ci
+	// nombre de message do celui ci
 
 	@RequestMapping(value = { "/back-office/salon/{nomsalon}" }, method = RequestMethod.GET)
 	public ModelAndView getAllMessagesBySalon(@PathVariable String nomsalon) throws CustomException {
 		ModelAndView model = new ModelAndView("/JSP/MessagesSalon.jsp");
 		GestionMessages gestionMessage = (GestionMessages) context.getAttribute("modele");
 		ArrayList<Message> listeMessages = (ArrayList<Message>) gestionMessage.getMessages(nomsalon);
-		int nbMessages = gestionMessage.getNbMessages(nomsalon);
+		//int nbMessages = gestionMessage.getNbMessages(nomsalon);
 		if (listeMessages != null) {
 
 			model.addObject("messages", listeMessages);
@@ -248,43 +249,68 @@ public class BackOffice {
 	 * PARTIE AJAX
 	 * 
 	 */
-	// Redirige vers le chat en AJAX
-	@RequestMapping(value = "/chat", method = RequestMethod.GET)
-	public String getChat(){
+	// NOTE : Le controlleur Spring fais le mapping sur chaque URI
+	// Nous sommes obligés de faire un mapping .
+	@RequestMapping(value = {"/chat*"})
+	public String test(){
 		return "HTML/chat.html";
 	}
 	
-	// Redirige ve
-	@RequestMapping(value = {"/chat/{salon}"}, method = RequestMethod.GET)
-	public String getMessage(@PathVariable("salon")String salon){
+	// Recupere la liste des messages du salon
+	// NOTE : Faire en sorte de recuperer que les messages non dispo coté client
+	@RequestMapping(value = {"/chat/salon/{salon}"}, method = RequestMethod.GET)
+	public @ResponseBody String getMessage(@PathVariable("salon")String salon, @RequestParam int idmessage){
 		GestionMessages gestionMessage = (GestionMessages) context.getAttribute("modele");
 		ArrayList<Message> listeMessage = (ArrayList<Message>)gestionMessage.getSalon(salon);
+		JSONObject jobjroot = new JSONObject();
+		jobjroot.put("salon", salon);
+		if (listeMessage ==null || listeMessage.size()==idmessage){
+			return "";//jobjroot.toString();
+		}else{
+			
+		
+		
+			
 		JSONArray jarr = new JSONArray();
+		int index = 0;
 		for (Message m : listeMessage){
-			JSONObject jobj = new JSONObject();
-			jobj.put("auteur", m.getPseudo());
-			jobj.put("message", m.getMessage());
-			jarr.put(jobj);
+			index++;
+			if (index >idmessage){
+				JSONObject jobj = new JSONObject();
+				jobj.put("auteur", m.getPseudo());
+				jobj.put("message", m.getMessage());
+				
+				jarr.put(jobj);
+			}
 			
 		}
-		JSONObject jobjroot = new JSONObject();
-		jobjroot.put("id", salon);
 		jobjroot.put("messages", jarr);
-		
+		jobjroot.put("nbmessage", gestionMessage.getNbMessages(salon));
 		return jobjroot.toString();
+		}
 	}
 	// AJout d'un message dans un salon
-	@RequestMapping(value = {"/chat/{salon}"}, method = RequestMethod.POST)
-	public String postMessage(@PathVariable("salon") String salon, @RequestParam String json){
+	@RequestMapping(value = {"/chat/salon/{salon}"}, method = RequestMethod.POST)
+	public @ResponseBody String postMessage(@PathVariable("salon") String salon,  @RequestParam String json){
+		
+		System.out.println(json);
+		System.out.println(salon);
 		GestionMessages gestionMessage = (GestionMessages) context.getAttribute("modele");
 		ArrayList<Message> listeMessage = (ArrayList<Message>)gestionMessage.getSalon(salon);
-		JSONArray jarr = new JSONArray(json);
-		for (int i = 0; i < jarr.length(); ++i){
-			JSONObject jobj = jarr.getJSONObject(i);
-			Message newMessage = new Message(jobj.getString("auteur"), jobj.getString("message"));
-			listeMessage.add(newMessage);
+		// Cas où le salon n'existe pas
+		if (listeMessage == null){
+			gestionMessage.setSalon(salon);
 		}
-		return "";
+		JSONObject jobj = new JSONObject(json);
+		Message newMessage = new Message(jobj.getString("auteur"), jobj.getString("message"));
+		gestionMessage.getSalon(salon).add(newMessage);
+		
+		JSONObject jnbmessage = new JSONObject();
+		// On retourne le nombre de message ainsi que la liste des message
+		
+		jnbmessage.put("nbmessage", gestionMessage.getNbMessages(salon));
+		return jnbmessage.toString();
 	}
+	
 	
 }

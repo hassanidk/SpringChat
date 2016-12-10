@@ -33,15 +33,14 @@ public class Filtre implements Filter {
         HttpSession session = req.getSession(false);
 	        if (session == null ){
 	        	
-	        	/* Cas où l'utilisateur est sur la page de login*/
-	        	if (req.getRequestURI().contains("index") || req.getRequestURI().equals("/my-webapp/") || req.getRequestURI().contains("Init")){
-	        		
-	        		chain.doFilter(request, response);
-	        		
-	        	}else{
-	        		res.sendRedirect("/my-webapp");
-	        	}
-	        		
+	        		/* Cas où l'utilisateur est sur la page de login*/
+	        		if (req.getRequestURI().contains("index") || req.getRequestURI().equals("/my-webapp/") || req.getRequestURI().contains("Init")){
+		        		chain.doFilter(request, response);		        		
+		        	}else{
+		        		res.sendRedirect("/my-webapp");
+		        	}
+	        	
+	
 	        }else{
 	        	// Cas où l'utilisateur est connecté, et qu'il tente d'acceder à la page de login
 	        	if (req.getRequestURI().contains("index")){
