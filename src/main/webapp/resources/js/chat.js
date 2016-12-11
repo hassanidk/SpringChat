@@ -15,6 +15,7 @@ $('body').on('keypress','#chattext', function(e){
 
 function loadmessage(){
 	var salon = getParam()["salon"];
+	var pseudo = getParam()["pseudo"];
 	var idmessage = $('#idmessage').text();
 		$.ajax({
 			type:"GET",
@@ -24,10 +25,16 @@ function loadmessage(){
 				var res = JSON.parse(respond);
 				jQuery.each(res.messages,function(i,val){
 					
-					
-					$('#pseudoMessage').append(val.auteur);
-					$('#separationMessage').append("-");
-					$('#contenuMessage').append(val.message);
+					if (pseudo == val.auteur){
+						$('#chat').append(addClass('message_user',val.auteur,val.message));
+					/*	$('#message_user #pseudoMessage').append(val.auteur);
+						$('#message_user #contenuMessage').append(val.message);*/
+					}else{
+						$('#chat').append(addClass('message_others',val.auteur,val.message));
+					/*	$('#message_others #pseudoMessage').append(val.auteur);
+						$('#message_others #contenuMessage').append(val.message);*/
+					}
+
 				})
 				
 				$('#idmessage').text(res['nbmessage']);
@@ -86,10 +93,13 @@ function newsalon(){
 	
 }
 
+function addClass(type,auteur,message){
+	var newclass='<div id="'+type+'"><span id="pseudoMessage">'+auteur+
+	'</span><span id="contenuMessage">'+message+'</div></div>'	
+		return newclass;
+}
 function quitter(){
-	location.href = "Logout";
-	
-	
+	location.href = "Logout";	
 }
 
 function getParam(){
