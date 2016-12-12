@@ -1,4 +1,5 @@
 $(document).ready(function() {
+	loadnamesalon();
 	loadmessage();
 	loadsalon();
 	
@@ -12,7 +13,10 @@ $('body').on('keypress','#chattext', function(e){
     }
 });
 
-
+function loadnamesalon(){
+	var salon = getParam()["salon"];
+	$('#idsalon').text('Salon '+salon);
+}
 function loadmessage(){
 	var salon = getParam()["salon"];
 	var pseudo = getParam()["pseudo"];
@@ -36,7 +40,6 @@ function loadmessage(){
 					}
 
 				})
-				
 				$('#idmessage').text(res['nbmessage']);
 				
 			}
@@ -69,6 +72,7 @@ function loadsalon(){
 		success:function(respond){
 			var res = JSON.parse(respond);
 			$('#listeSalon').empty();
+			$('#listeSalon').append('<h1>Liste des salons</h1>');
 			jQuery.each(res.salons,function(i,val){	
 				$('#listeSalon').append("<a href=\"chat.html?pseudo="+pseudo+"&salon="+val.salon+"\">"+val.salon+"</a> <br />");
 						
@@ -94,9 +98,10 @@ function newsalon(){
 }
 
 function addClass(type,auteur,message){
-	var newclass='<div id="'+type+'"><span id="pseudoMessage">'+auteur+
-	'</span><span id="contenuMessage">'+message+'</div></div>'	
-		return newclass;
+	var newclass='<div id="'+type+'"><div id="contenuMessage">'+message+'</div><span id="pseudoMessage">'
+	+auteur+'</span></div>'	
+	
+	return newclass;
 }
 function quitter(){
 	location.href = "Logout";	
