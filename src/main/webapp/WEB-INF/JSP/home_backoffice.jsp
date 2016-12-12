@@ -18,10 +18,10 @@ and open the template in the editor.
            
             
             <div class="sectionBackoffice">
-            	 <a href="back-office/users" class="titreDiv">Gestion Utilisateur</a>
+            	 <a href="<c:url value="back-office/users"/>" class="titreDiv">Gestion Utilisateur</a>
             </div>
             <div class="sectionBackoffice">
-            	 <a href="back-office/salon" class="titreDiv">Gestion Salon & Messages</a>
+            	 <a href="<c:url value="back-office/salon"/>" class="titreDiv">Gestion Salon & Messages</a>
             </div>
             
 	</body>
