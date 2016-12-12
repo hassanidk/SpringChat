@@ -1,0 +1,98 @@
+#idsalon{
+	text-align:center;
+	font-family:"Calibri", "Roboto", sans-serif;
+	
+	
+}
+#chat{
+ position: relative;
+  list-style: none;
+  padding: 20px 10px 0 10px;
+  margin: 0;
+  height: 347px;
+  overflow: scroll;
+   background-color: #fff;
+  font-family: "Calibri", "Roboto", sans-serif;
+
+}
+
+
+
+#message_others #contenuMessage {
+color: white;
+background-color: #86BB71;
+align-self: flex-end;
+animation-name: slideFromRight;
+	text-align:left;
+    font-size: 16px;
+    position: relative;
+    display: block;
+    clear: both;
+    padding: 13px 14px;
+    vertical-align: top;
+    border-radius: 5px;  
+ 
+}
+#message_others #pseudoMessage{
+	float:left;
+	top:50px;
+	margin-bottom:16px;
+	font-style:italic;
+	font-size:12px;
+	opacity:1;
+}
+
+#message_user #contenuMessage {
+	
+color: white;
+background-color: #94C2ED;
+align-self: flex-end;
+animation-name: slideFromRight;
+	text-align:right;
+    font-size: 16px;
+    position: relative;
+    display: block;
+    clear: both;
+    padding: 13px 14px;
+    vertical-align: top;
+    border-radius: 5px;  
+}
+
+
+#message_user  #pseudoMessage{
+	float:right;
+	top:50px;
+	margin-bottom:16px;
+	font-size:12px;
+	font-style:italic;
+	opacity:1;
+}
+
+#chattext{
+	  width:93%;
+      font: 14px/22px "Calibri", "Roboto", sans-serif;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      resize: none;
+     
+      
+}
+
+#btn-chat{
+	
+    color: #fff;
+    border: none;
+    background: #248A52;
+    font-size: 10px;
+    text-transform: uppercase;
+    line-height: 1;
+    padding-top: 44px;
+    padding-right:19px;
+    border-radius: 10px;
+    outline: none!important;
+    transition: background .2s ease;
+    
+    &:hover {
+      background: #1D7745;
+    }}
+

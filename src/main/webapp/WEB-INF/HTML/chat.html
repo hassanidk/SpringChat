@@ -13,22 +13,25 @@ and open the template in the editor.
 
 </head>
 <body>
+	<h1 id="idsalon"></h1>
 	<div id="chat">
-			<div hidden id="idmessage">0</div>
+		
+		<div hidden id="idmessage">0</div>
 	</div>
 	<textarea rows="1" id="chattext"></textarea>
-		<button onclick="sendMessage()">Envoyer</button>
+	<button id="btn-chat" onclick="sendMessage()">Envoyer</button>
 
-	<div id="listeSalon">
-	</div>
-		<textarea rows="1" id="newsalon"></textarea>
-		<button onclick="newsalon()">Créer nouveau salon</button>
-	
-	<button onclick="quitter()"> Se deconnecter</button>
+
+
+	<div id="listeSalon"></div>
+	<textarea rows="1" id="newsalon"></textarea>
+	<button onclick="newsalon()">Créer nouveau salon</button>
+
+	<button onclick="quitter()">Se deconnecter</button>
 	<!-- SCRIPT JS -->
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 	<script type="text/javascript" src="resources/js/chat.js" /></script>
-	
+
 </body>
 </html>
