@@ -46,10 +46,11 @@ public class Filtre implements Filter {
 	        	if (req.getRequestURI().contains("index")){
 	        		res.sendRedirect("/my-webapp");
 	        	}else{
-	        		
+	        		if (req.getRequestURI().equals("/my-webapp/back-office/")){
+	        			res.sendRedirect("/my-webapp/back-office");
+	        		}else{
 	        			chain.doFilter(request, response);
-	        		
-	        			
+	        		}
 	        	
 	        	}
 	        	

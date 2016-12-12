@@ -10,6 +10,7 @@ setInterval(function(){loadsalon();},60000);
 $('body').on('keypress','#chattext', function(e){
     if (e.keyCode == 13){
     	sendMessage();
+    	loadmessage();
     }
 });
 
@@ -31,12 +32,9 @@ function loadmessage(){
 					
 					if (pseudo == val.auteur){
 						$('#chat').append(addClass('message_user',val.auteur,val.message));
-					/*	$('#message_user #pseudoMessage').append(val.auteur);
-						$('#message_user #contenuMessage').append(val.message);*/
+				
 					}else{
 						$('#chat').append(addClass('message_others',val.auteur,val.message));
-					/*	$('#message_others #pseudoMessage').append(val.auteur);
-						$('#message_others #contenuMessage').append(val.message);*/
 					}
 
 				})
@@ -92,6 +90,7 @@ function newsalon(){
 		success:function(respond){
 			alert(respond);
 			loadsalon();
+			$('#newsalon').val('');
 		}
 	});
 	
