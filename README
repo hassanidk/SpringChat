@@ -1,9 +1,8 @@
 Rendu du TP4 :TP 4 : initiation aux services Web (programmation REST)
 =====================================================================
 
-OTHOMENE Thibaut 11302812
 HASSANI  Kassim  11302141
-
+OTHOMENE Thibaut 11302812
 
 Voir http://liris.cnrs.fr/lionel.medini/enseignement/M1IF03/TP/TP_REST.html
 
@@ -47,8 +46,6 @@ Commentaires
  
 
 
-
- La partie hypermédia n'a pas été traité
  Gestion URI
  ----------------------------------------------------------------------
  Nous avons essayé de mettre des URI se rapprochant de l'architecture REST
@@ -68,8 +65,6 @@ Commentaires
  	Représente un utilisateur du chat. Il est possible de manipuler cet
  	utilisateur via la liste des verbes HTTP
 
- NOTE : Nous avons des doutes concernant le noeud parent à l'id.
- 		Mettre au pluriel user/salon ou les laisser au présent?
  
  Problèmes
  ----------------------------------------------------------------------
@@ -79,13 +74,8 @@ de générer un fichier xml. En effet, il n'est pas possible d'ajouter deux
 élements au modèle de la vue, lorsque l'on veut générer du contenu xml.
 Cependant pour la même méthode, le contenu json est généré
 
-Un dysfonctionement par moment lorsque l'ont modifie les url via la barre
-d'adresse côté back-office.
-
- L'ensemble de nos fichiers liées à la vue ne sont pas correctement placés
- Nous les avons mis sous le dossier webapp au lieu du dossier webinf
-
- Reste à faire
+ Info complémentaires
  -----------------------------------------------------------------------
- Corriger les problèmes
- S'occuper de la partie graphique de notre chat
+ Si tu tombes ici, c'est que tu es bloqué sur un point du TP. Essaies
+ quand même de te débrouiller sans (Tu peux le faire). Bonne chance à 
+ toi ;)
